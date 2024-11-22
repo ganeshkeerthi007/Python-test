@@ -10,8 +10,8 @@ import logger as lg
 logger = lg.setup_logger()
 
 
-HOST = "0.0.0.1"
-PORT = 1
+HOST = "0.0.0.0"
+PORT = 80
 
 client = SocketClient(HOST, PORT)
 
