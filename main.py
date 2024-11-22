@@ -25,8 +25,8 @@ if __name__ == "__main__":
     socket_thread.start()
 
     r = redis.Redis(
-        host="www.cloud.redislabs.com",
-        port=757,
+        host="www.redislabs.com",
+        port=6379,
         password="google.com",
         decode_responses=True)
 
