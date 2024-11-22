@@ -1,45 +1,31 @@
-trigger:
-  branches:
-    include:
-      - dev
-      - test
-      - prod
+triggers:
+- none
 
 pool:
   vmImage: 'ubuntu-latest'
 
-jobs:
-- job: Build
-  displayName: 'Build Job'
-  steps:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.x'
-  - script: |
-      echo "Building the project"
-      python setup.py build
-    displayName: 'Build Step'
+variables:
+  acr: 'motoacr01.azurecr.io'
 
-- job: DeployDev
-  dependsOn: Build
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/dev')
-  displayName: 'Deploy to Dev Environment'
-  steps:
-  - script: echo "Deploying to Dev environment"
-    displayName: 'Deploy Dev Step'
+steps:
+- task: Docker@1
+  displayName: 'docker build'
+  inputs:
+    azureSubscriptionEndpoint: python
+    azureContainerRegistry: $(acr)
+    dockerFile: Dockerfile
 
-- job: DeployTest
-  dependsOn: Build
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/test')
-  displayName: 'Deploy to Test Environment'
-  steps:
-  - script: echo "Deploying to Test environment"
-    displayName: 'Deploy Test Step'
+- task: Docker@1
+  displayName: 'docker push'
+  inputs:
+   azureSubscriptionEndpoint: python
+   azureContainerRegistry: $(acr)
+   command: Push an image
 
-- job: DeployProd
-  dependsOn: Build
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/prod')
-  displayName: 'Deploy to Prod Environment'
-  steps:
-  - script: echo "Deploying to Prod environment"
-    displayName: 'Deploy Prod Step'
+- task: AzureWebAppContainer@1
+  displayName: 'web app'
+  inputs:
+    azureSubscription: python
+    appName: 'testing-python-app'
+    containers: 'motoacr01.azurecr.io/pythonproject:$(Build.BuildID)'
+
