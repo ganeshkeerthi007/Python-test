@@ -1,5 +1,5 @@
 # Use the official Python 3.11 slim version as the base image
-FROM python:3.11-slim
+FROM 3.14.0a2-windowsservercore-ltsc2022
 
 # Set the working directory in the container
 WORKDIR /app
