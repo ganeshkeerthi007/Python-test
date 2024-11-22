@@ -1,0 +1,45 @@
+trigger:
+  branches:
+    include:
+      - dev
+      - test
+      - prod
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+- job: Build
+  displayName: 'Build Job'
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
+  - script: |
+      echo "Building the project"
+      python setup.py build
+    displayName: 'Build Step'
+
+- job: DeployDev
+  dependsOn: Build
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+  displayName: 'Deploy to Dev Environment'
+  steps:
+  - script: echo "Deploying to Dev environment"
+    displayName: 'Deploy Dev Step'
+
+- job: DeployTest
+  dependsOn: Build
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/test')
+  displayName: 'Deploy to Test Environment'
+  steps:
+  - script: echo "Deploying to Test environment"
+    displayName: 'Deploy Test Step'
+
+- job: DeployProd
+  dependsOn: Build
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/prod')
+  displayName: 'Deploy to Prod Environment'
+  steps:
+  - script: echo "Deploying to Prod environment"
+    displayName: 'Deploy Prod Step'
