@@ -11,7 +11,7 @@ logger = lg.setup_logger()
 
 
 HOST = "0.0.0.0"
-PORT = 80
+PORT = 6379
 
 client = SocketClient(HOST, PORT)
 
