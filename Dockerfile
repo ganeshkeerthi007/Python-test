@@ -1,23 +1,15 @@
-# Use the official Python 3.11 slim version as the base image
-FROM python:3.8
-
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy the requirements file into the container
+# Start with a lightweight Python image
+FROM python:3.11-slim
+ 
+# Copy only requirements file to leverage Docker cache if dependencies don’t change
 COPY requirements.txt .
-
-# Install the dependencies
+ 
+# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
-
+ 
 # Copy the rest of the application code into the container
 COPY . .
-
-# Set environment variables (optional)
-ENV PYTHONUNBUFFERED=1
-
-# Expose the port that the application runs on
-EXPOSE 8000
-
-# Command to run the application
+ 
+# Set the default command to run your main application file
 CMD ["python", "main.py"]
+ 
