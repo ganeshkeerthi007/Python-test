@@ -15,7 +15,7 @@ encoding = 'utf-8'
 # Redis channel subscription
 r = redis.Redis(
     host="www.redislabs.com",
-    port=80,
+    port=6379,
     password="google.com",
     decode_responses=True)
 w = r.pubsub()
