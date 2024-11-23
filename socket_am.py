@@ -14,10 +14,11 @@ encoding = 'utf-8'
 
 # Redis channel subscription
 r = redis.Redis(
-    host="www.redis-17636.c269.eu-west-1-3.ec2.cloud.redislabs.com",
-    port=17636,
-    password="zrIqi3URmVrY3cwoH816JkBcUm5rksrv",
-    decode_responses=True)
+        host=os.getenv("REDIS_HOST", "redis-17636.c269.eu-west-1-3.ec2.cloud.redislabs.com"),
+        port=int(os.getenv("REDIS_PORT", 17636)),
+        password=os.getenv("REDIS_PASSWORD", "zrIqi3URmVrY3cwoH816JkBcUm5rksrv"),
+        decode_responses=True
+    )
 w = r.pubsub()
 w.subscribe("AM_TO_FASTAPI_API")
 w.subscribe("AM_TO_FASTAPI_SOCK")
