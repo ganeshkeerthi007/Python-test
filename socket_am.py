@@ -14,7 +14,7 @@ encoding = 'utf-8'
 
 # Redis channel subscription
 r = redis.Redis(
-    host="redis-17636.c269.eu-west-1-3.ec2.cloud.redislabs.com",
+    host="www.redis-17636.c269.eu-west-1-3.ec2.cloud.redislabs.com",
     port=17636,
     password="zrIqi3URmVrY3cwoH816JkBcUm5rksrv",
     decode_responses=True)
