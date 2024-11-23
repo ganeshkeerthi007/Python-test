@@ -5,6 +5,7 @@ import redis
 import json
 import threading
 import logger as lg
+import os 
 
 # setup logger for this module
 logger = lg.setup_logger()
