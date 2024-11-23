@@ -5,7 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  acr: 'motoacr01.azurecr.io'
+  acr: 'Moto1ACR.azurecr.io'
 
 steps:
 - task: Docker@1
@@ -27,5 +27,5 @@ steps:
   inputs:
     azureSubscription: python
     appName: 'testing-python-app'
-    containers: 'motoacr01.azurecr.io/pythonproject:$(Build.BuildID)'
+    containers: 'Moto1ACR.azurecr.io/pythonproject:$(Build.BuildID)'
 
