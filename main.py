@@ -10,8 +10,8 @@ import logger as lg
 logger = lg.setup_logger()
 
 
-HOST = "63.35.161.212"
-PORT = 50530
+HOST = os.getenv("SOCKET_HOST", "63.35.161.212")
+PORT = int(os.getenv("SOCKET_PORT", 50530))
 
 client = SocketClient(HOST, PORT)
 
@@ -25,10 +25,11 @@ if __name__ == "__main__":
     socket_thread.start()
 
     r = redis.Redis(
-        host="www.redis-17636.c269.eu-west-1-3.ec2.cloud.redislabs.com",
-        port=17636,
-        password="zrIqi3URmVrY3cwoH816JkBcUm5rksrv",
-        decode_responses=True)
+        host=os.getenv("REDIS_HOST", "redis-17636.c269.eu-west-1-3.ec2.cloud.redislabs.com"),
+        port=int(os.getenv("REDIS_PORT", 17636)),
+        password=os.getenv("REDIS_PASSWORD", "zrIqi3URmVrY3cwoH816JkBcUm5rksrv"),
+        decode_responses=True
+    )
 
     q = r.pubsub()
     q.subscribe("FASTAPI_TO_AM")
